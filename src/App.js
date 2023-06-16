@@ -6,10 +6,28 @@ import Loader from './components/Loader';
 function App() {
   const [movies, setMovies] = useState([]);
   const [loading,setisLoading] = useState(false);
+  const [error,setError] = useState();
   const fetchMoviesHandler = async() =>{
     setisLoading(true);
-    const response = await fetch('https://swapi.dev/api/films/', )
+    setError(null);
+    try {
+      const response = await fetch('https://swapi.dev/api/film/', )
+      if(!response.ok){
+        setTimeout(() => {
+          const response = fetch('https://swapi.dev/api/film/', )
+          setisLoading(true);
+        },500)
+       
+        throw new Error('Something Went Wrong')
+       
+       
+      } else {
+        setisLoading(false);
+      }
+
     const data = await response.json();
+
+   
       const transformedMovies = data.results.map(movieData => {
         return {
 
@@ -20,9 +38,16 @@ function App() {
         }
       });
         setMovies(transformedMovies);
+    } catch(error) {
+      setError(error.message )
+    }
+    
         setisLoading(false);
   }
-
+let content = <b>...Retrying</b>
+const handleCancel = () => {
+  setisLoading(false)
+}
   return (
     <React.Fragment>
       <section>
@@ -30,8 +55,10 @@ function App() {
         <button onClick={fetchMoviesHandler} disabled={loading}>Fetch Movies</button>
       </section>
       <section>
+       {loading && <button onClick={handleCancel}>X</button>}
        {!loading && <MoviesList movies={movies} /> }
         {loading && <Loader /> }
+        {!loading && error && <p>{error}{content}</p>}
       </section>
     </React.Fragment>
   );
