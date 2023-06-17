@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import MoviesList from './components/MoviesList';
 import './App.css';
 import Loader from './components/Loader';
@@ -7,14 +7,15 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [loading,setisLoading] = useState(false);
   const [error,setError] = useState();
-  const fetchMoviesHandler = async() =>{
+
+  const fetchMoviesHandler = useCallback(async () => {
     setisLoading(true);
     setError(null);
     try {
-      const response = await fetch('https://swapi.dev/api/film/', )
+      const response = await fetch('https://swapi.dev/api/films/', )
       if(!response.ok){
         setTimeout(() => {
-          const response = fetch('https://swapi.dev/api/film/', )
+          const response = fetch('https://swapi.dev/api/films/', )
           setisLoading(true);
         },500)
        
@@ -43,11 +44,16 @@ function App() {
     }
     
         setisLoading(false);
-  }
+  },[]);
+    useEffect(() => {
+    fetchMoviesHandler();
+  },[fetchMoviesHandler])
+  
 let content = <b>...Retrying</b>
 const handleCancel = () => {
   setisLoading(false)
 }
+
   return (
     <React.Fragment>
       <section>
