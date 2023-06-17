@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import MoviesList from './components/MoviesList';
 import './App.css';
 import Loader from './components/Loader';
-
+import MovieForm from './components/MovieForm';
 function App() {
   const [movies, setMovies] = useState([]);
   const [loading,setisLoading] = useState(false);
@@ -35,7 +35,7 @@ function App() {
           id: movieData.episode_id,
           title:movieData.title,
           openingText:movieData.opening_crawl,
-          releaseData:movieData.release_date
+          releaseDate:movieData.release_date
         }
       });
         setMovies(transformedMovies);
@@ -57,7 +57,10 @@ const handleCancel = () => {
   return (
     <React.Fragment>
       <section>
-       
+      <MovieForm />
+      </section>
+      <section>
+      
         <button onClick={fetchMoviesHandler} disabled={loading}>Fetch Movies</button>
       </section>
       <section>
