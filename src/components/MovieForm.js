@@ -26,7 +26,7 @@ const MovieForm = props => {
             openingText:enteredOpeningText,
             releaseDate:enteredDate
         }
-        console.log(movieData);
+        props.onAddMovie(movieData);
         setEnteredTitle('');
         setOpeningText('');
         setEnteredDate('')
