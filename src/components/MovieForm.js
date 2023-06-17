@@ -41,7 +41,7 @@ return (
             </div>
             <div className={classes.openingText}>
             <label htmlFor="openingText">Opening Text</label>
-            <textarea rows="4" cols="50" />
+            <textarea rows="4" cols="50"  onChange={updateOpeningText} value={enteredOpeningText} />
             {/* <input type="text" id="opening text" onChange={updateOpeningText} value={enteredOpeningText} /> */}
             </div>
             <div className={classes.date}>
